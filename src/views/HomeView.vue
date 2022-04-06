@@ -2,7 +2,11 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <h2>{{ message2 }}</h2>
-    <div v-for="product in products" :key="product.id">{{ product.name }}</div>
+    <div v-for="product in products" :key="product.id">
+      {{ product.id }}
+      {{ product.name }}
+      <img :src="product.image_url" :alt="product.title" />
+    </div>
   </div>
 </template>
 
@@ -30,4 +34,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+img {
+  width: 250px;
+}
+</style>
