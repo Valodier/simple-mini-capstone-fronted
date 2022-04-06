@@ -2,10 +2,29 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <h2>{{ message2 }}</h2>
+
+    <div>
+      <h1>ADD TO THE PROBLEM</h1>
+      <div>DUBBED: <input type="text" v-model="newRecipeParams.name" /></div>
+      <div>
+        THE SACRIFICE: <input type="text" v-model="newRecipeParams.price" />
+      </div>
+      <div>
+        Description: <input type="text" v-model="newRecipeParams.description" />
+      </div>
+      <div>
+        Image_url: <input type="text" v-model="newRecipeParams.image_url" />
+      </div>
+      <button v-on:click="createProducts">BRING FORTH</button>
+    </div>
+
     <div v-for="product in products" :key="product.id">
-      {{ product.id }}
-      {{ product.name }}
+      <h2>{{ product.id }}</h2>
+      <h1>{{ product.name }}</h1>
       <img :src="product.image_url" :alt="product.title" />
+      <body>
+        {{ product.description }}
+      </body>
     </div>
   </div>
 </template>
@@ -15,9 +34,10 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Vue.js!",
+      message: "The Place to do The Things for The Stuff",
       message2: "Everything you could ever not know you wanted!",
       products: [],
+      newRecipeParams: {},
     };
   },
   created: function () {
@@ -29,6 +49,17 @@ export default {
         this.products = response.data;
         console.log("All products", this.products);
       });
+    },
+    createProducts: function () {
+      console.log("MAKE ONE");
+
+      axios
+        .post("http://localhost:3000/products.json", this.newRecipeParams)
+        .then((response) => {
+          console.log("GREAT SUCCESS", response.data);
+          this.products.push(response.data);
+        })
+        .catch((error) => console.log(error.response));
     },
   },
 };
