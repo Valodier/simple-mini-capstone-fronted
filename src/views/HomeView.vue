@@ -2,32 +2,31 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <h2>{{ message2 }}</h2>
-    <div v-for="product in products" :key="product.id">{{ product }}</div>
+    <div v-for="product in products" :key="product.id">{{ product.name }}</div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data: function () {
     return {
       message: "Welcome to Vue.js!",
       message2: "Everything you could ever not know you wanted!",
-      products: [
-        {
-          id: 1,
-          name: "Product 1",
-          price: 10,
-        },
-        {
-          id: 2,
-          name: "Product 2",
-          price: 230,
-        },
-      ],
+      products: [],
     };
   },
-  created: function () {},
-  methods: {},
+  created: function () {
+    this.indexProducts();
+  },
+  methods: {
+    indexProducts: function () {
+      axios.get("http://localhost:3000/products.json").then((response) => {
+        this.products = response.data;
+        console.log("All products", this.products);
+      });
+    },
+  },
 };
 </script>
 
