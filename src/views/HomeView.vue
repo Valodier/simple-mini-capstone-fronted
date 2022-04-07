@@ -10,10 +10,10 @@
         THE SACRIFICE: <input type="text" v-model="newRecipeParams.price" />
       </div>
       <div>
-        Description: <input type="text" v-model="newRecipeParams.description" />
+        IS WHAT NOW: <input type="text" v-model="newRecipeParams.description" />
       </div>
       <div>
-        Image_url: <input type="text" v-model="newRecipeParams.image_url" />
+        SHOW US: <input type="text" v-model="newRecipeParams.image_url" />
       </div>
       <button v-on:click="createProducts">BRING FORTH</button>
     </div>
@@ -22,10 +22,18 @@
       <h2>{{ product.id }}</h2>
       <h1>{{ product.name }}</h1>
       <img :src="product.image_url" :alt="product.title" />
-      <body>
-        {{ product.description }}
-      </body>
+      <br /><button v-on:click="showProduct(product)">More Info!</button>
     </div>
+    <dialog id="product-details">
+      <form method="dialog">
+        <h1>Product Info</h1>
+        <p>Name: {{ currentProduct.name }}</p>
+        <p>Price: {{ currentProduct.price }}</p>
+        <p>Description: {{ currentProduct.description }}</p>
+        <p>Image Url: {{ currentProduct.image_url }}</p>
+        <button>Close</button>
+      </form>
+    </dialog>
   </div>
 </template>
 
@@ -38,6 +46,7 @@ export default {
       message2: "Everything you could ever not know you wanted!",
       products: [],
       newRecipeParams: {},
+      currentProduct: {},
     };
   },
   created: function () {
@@ -60,6 +69,12 @@ export default {
           this.products.push(response.data);
         })
         .catch((error) => console.log(error.response));
+      this.newRecipeParams = {};
+    },
+    showProduct: function (product) {
+      console.log(product);
+      this.currentProduct = product;
+      document.querySelector("#product-details").showModal();
     },
   },
 };
