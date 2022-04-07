@@ -36,6 +36,7 @@
           Image Url:<input type="text" v-model="currentProduct.image_url" />
         </p>
         <button v-on:click="updateProduct(currentProduct)">Update</button>
+        <button v-on:click="destroyProduct(currentProduct)">DESTROY!</button>
         <button>Close</button>
       </form>
     </dialog>
@@ -90,6 +91,15 @@ export default {
         )
         .then((response) => {
           console.log("GREAT SUCCESS", response.data);
+        });
+    },
+    destroyProduct: function (product) {
+      axios
+        .delete("http://localhost:3000/products" + product.id)
+        .then((response) => {
+          console.log("ELIMINATED!", response.data);
+          var index = this.product.indexOf(product);
+          this.products.splice(index, 1);
         });
     },
   },
