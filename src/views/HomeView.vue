@@ -95,10 +95,10 @@ export default {
     },
     destroyProduct: function (product) {
       axios
-        .delete("http://localhost:3000/products" + product.id)
+        .delete("http://localhost:3000/products/" + product.id)
         .then((response) => {
           console.log("ELIMINATED!", response.data);
-          var index = this.product.indexOf(product);
+          var index = this.products.indexOf(product);
           this.products.splice(index, 1);
         });
     },
