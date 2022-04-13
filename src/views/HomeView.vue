@@ -5,15 +5,16 @@
 
     <div>
       <h1>ADD TO THE PROBLEM</h1>
-      <div>DUBBED: <input type="text" v-model="newRecipeParams.name" /></div>
+      <div>DUBBED: <input type="text" v-model="newProductParams.name" /></div>
       <div>
-        THE SACRIFICE: <input type="text" v-model="newRecipeParams.price" />
+        THE SACRIFICE: <input type="text" v-model="newProductParams.price" />
       </div>
       <div>
-        IS WHAT NOW: <input type="text" v-model="newRecipeParams.description" />
+        IS WHAT NOW:
+        <input type="text" v-model="newProductParams.description" />
       </div>
       <div>
-        SHOW US: <input type="text" v-model="newRecipeParams.image_url" />
+        SHOW US: <input type="text" v-model="newProductParams.image_url" />
       </div>
       <button v-on:click="createProducts">BRING FORTH</button>
     </div>
@@ -69,13 +70,13 @@ export default {
       console.log("MAKE ONE");
 
       axios
-        .post("http://localhost:3000/products.json", this.newRecipeParams)
+        .post("http://localhost:3000/products.json", this.newProductParams)
         .then((response) => {
           console.log("GREAT SUCCESS", response.data);
           this.products.push(response.data);
         })
         .catch((error) => console.log(error.response));
-      this.newRecipeParams = {};
+      this.newProductParams = {};
     },
     showProduct: function (product) {
       console.log(product);
